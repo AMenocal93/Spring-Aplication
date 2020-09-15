@@ -1,4 +1,6 @@
 package com.mycode.ProyectoCursoSpring.service.imp;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,6 +28,17 @@ public class ContactServiceImp implements ContactService {
 	public ContactModel addContact(ContactModel contactModel) {
 		Contact contact = contactRepository.save(contactConverter.convertToContact(contactModel));
 		return contactConverter.convertToContactModel(contact);
+	}
+
+	@Override
+	public List<ContactModel> listAllContacts() {
+		List<Contact> contacts = contactRepository.findAll();
+		List<ContactModel> contactsModel = new ArrayList<ContactModel>();
+		for (Contact contact : contacts) {
+			contactsModel.add(contactConverter.convertToContactModel(contact));
+		}
+		
+		return contactsModel;
 	}
 
 }
